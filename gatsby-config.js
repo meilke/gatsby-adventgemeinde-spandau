@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: `/gatsby-adventgemeinde-spandau`,
   siteMetadata: {
     title: `Title from siteMetadata`,
   },

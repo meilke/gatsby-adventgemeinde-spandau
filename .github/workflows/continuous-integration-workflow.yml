@@ -1,5 +1,8 @@
 name: Build and Deploy
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
@@ -17,7 +20,7 @@ jobs:
       - run: |
           npm install -g gatsby-cli
           npm install
-          gatsby build
+          gatsby build --prefix-paths
         env:
           GATSBY_CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
 
