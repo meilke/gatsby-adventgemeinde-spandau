@@ -1,16 +1,10 @@
 module.exports = {
   pathPrefix: `/gatsby-adventgemeinde-spandau`,
   siteMetadata: {
-    title: `Title from siteMetadata`,
+    title: `Adventgemeinde Spandau`,
   },
   plugins: [
-    `gatsby-plugin-emotion`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
+    `gatsby-plugin-material-ui`,
     {
       resolve: `gatsby-source-contentful`,
       options: {
