@@ -4,15 +4,27 @@ import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import Typography from "@material-ui/core/Typography"
 import Grid from "@material-ui/core/Grid"
-import axios from "axios"
 
 import Layout from "../components/Layout"
 import BackgroundCard from "../components/BackgroundCard"
 
+const useDataFetch = url => {
+  const [data, setData] = useState(null)
+  useEffect(() => {
+    const loadData = async url => {
+      const response = await fetch(url)
+      const json = await response.json()
+      setData(json)
+    }
+    loadData(url)
+  }, [url])
+  return data
+}
+
 const CONST = {
   calendar: {
     calendarId: "0b3qhbnd5mtjm6cddtb3fjm76k@group.calendar.google.com",
-    key: "AIzaSyCauTfwFZE3qJVTLjm0u6PTot1aT_mhV3s",
+    key: process.env.GATSBY_GOOGLE_API_KEY,
     maxResults: 3,
   },
 }
@@ -44,21 +56,14 @@ const useStyles = makeStyles(theme =>
   })
 )
 
+const now = new Date().toISOString()
+
 export default function Home() {
   const classes = useStyles()
-  const [data, setData] = useState([])
 
-  useEffect(() => {
-    async function fetchData() {
-      const now = new Date().toISOString()
-      const result = await axios(
-        `https://www.googleapis.com/calendar/v3/calendars/${CONST.calendar.calendarId}/events?key=${CONST.calendar.key}&orderBy=startTime&timeMin=${now}&maxResults=${CONST.calendar.maxResults}&singleEvents=true`
-      )
-
-      setData(result.data.items)
-    }
-    fetchData()
-  })
+  const data = useDataFetch(
+    `https://www.googleapis.com/calendar/v3/calendars/${CONST.calendar.calendarId}/events?key=${CONST.calendar.key}&orderBy=startTime&timeMin=${now}&maxResults=${CONST.calendar.maxResults}&singleEvents=true`
+  )
 
   return (
     <Layout>
@@ -67,11 +72,19 @@ export default function Home() {
           <Grid item xs={12}>
             <BackgroundCard />
           </Grid>
-          {data.map(renderEvent)}
+          {renderEvents()}
         </Grid>
       </div>
     </Layout>
   )
+
+  function renderEvents() {
+    if (!data) {
+      return null
+    }
+
+    return data.items.map(renderEvent)
+  }
 
   function renderEvent(e) {
     return (
