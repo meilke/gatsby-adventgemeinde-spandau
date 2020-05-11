@@ -10,7 +10,7 @@ export default function About({ data }) {
 
   function renderFrontpage(edge) {
     return (
-      <div>
+      <div key={edge.node.title}>
         <h1>{edge.node.title}</h1>
         <p>{edge.node.content.content}</p>
       </div>
