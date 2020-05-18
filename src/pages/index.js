@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import { makeStyles, createStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
-import CardHeader from "@material-ui/core/CardHeader"
 import Typography from "@material-ui/core/Typography"
 import Grid from "@material-ui/core/Grid"
 
@@ -56,9 +55,6 @@ const useStyles = makeStyles(theme =>
     pos: {
       marginBottom: 12,
     },
-    andacht: {
-      height: 220,
-    },
   })
 )
 
@@ -82,18 +78,8 @@ export default function Home() {
             <Typography variant="h5">Demnächst...</Typography>
           </Grid>
           {renderEvents()}
-          <Grid item xs={2} className={classes.andacht}>
+          <Grid item xs={12}>
             <Andacht />
-          </Grid>
-          <Grid item xs={10}>
-            <Card className={classes.cardRoot}>
-              <CardHeader title="Angedacht | STIMME DER HOFFNUNG - Tägliche Andacht"></CardHeader>
-              <CardContent>
-                Die tägliche Andacht aus dem Andachtsbuch des Advent-Verlags
-                Lüneburg, einer Einrichtung der Freikirche der
-                Siebenten-Tags-Adventisten.
-              </CardContent>
-            </Card>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h5" align="center">
